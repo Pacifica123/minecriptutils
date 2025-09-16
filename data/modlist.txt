@@ -1,0 +1,38 @@
+Глобальные:
+Industrial Upgrade
+Applied Energistics 2
+Mekanism
+Thermal Foundation
+Thermal Expansion
+Thermal Innovation
+Thermal Dynamics
+Thermal Cultivation
+Thermal Integration
+Thermal Locomotion
+BuildCraft RF: ReFluxified (15RF -> 1MJ)
+Immersive Engineering
+Tinkers Construct
+Biomes O' Plenty
+
+Аддоны:
+Applied Energistics 2 Wireless Terminals
+ExtendedAE
+MEGA Cells
+Applied Mekanistics
+Mekanism Generators
+Mekanism Tools
+Mekanism Lasers
+More Immersive Wires
+Useful Slime (NeoForge/Fabric)
+Engineers Delight
+Tinkers' Levelling Addon
+Tinkers Construct: Emergence
+
+Вспомогательные:
+JEI (пройтись по всем глобалкам)
+Mouse Tweaks
+AppleSkin
+Bookshelf
+ModernFix
+Biomes O' Plenty : всякие связи с др. модами
+Всякие Macaw's
