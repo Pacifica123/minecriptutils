@@ -14,8 +14,15 @@ from src.visualizer import __name__ as vis_mod
 
 def main():
     p = argparse.ArgumentParser()
-    p.add_argument('input')
-    p.add_argument('output')
+
+    base_dir = os.path.dirname(os.path.abspath(__file__))
+    input_path = os.path.join(base_dir, '..', 'data', 'modlist.txt')
+    output_path = os.path.join(base_dir, '..', 'output', 'modgraph_default.html')
+
+    p.add_argument('input', nargs='?', default=input_path)
+    p.add_argument('output', nargs='?', default=output_path)
+
+
     p.add_argument('--templates', help='Путь к папке с template файлами (custom.js/custom.css)', default="./visualizer/templates")
     p.add_argument('--bg-color', help='Background color like #101010', default=None)
     p.add_argument('--bg-image', help='Background image url or path', default=None)
