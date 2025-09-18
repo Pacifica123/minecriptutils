@@ -48,27 +48,44 @@ class Visualizer:
         tmp = output_file + '.tmp.html'
         self.net.write_html(tmp, notebook=False, open_browser=False)
 
-        # optionally inject custom template parts
-        html = open(tmp, 'r', encoding='utf-8').read()
+        # читаем html
+        with open(tmp, 'r', encoding='utf-8') as f:
+            html = f.read()
         os.remove(tmp)
 
-        # inject bg or custom css/js from template_dir
-        injection = ''
+        import shutil
+        injection_head = ''
+        injection_body = ''
+
+        # подключение кастомных файлов
         if template_dir:
             css_path = os.path.join(template_dir, 'custom.css')
             js_path = os.path.join(template_dir, 'custom.js')
+            out_dir = os.path.dirname(output_file)
+
             if os.path.exists(css_path):
-                injection += f"<link rel='stylesheet' href='custom.css'>\n"
+                shutil.copy(css_path, out_dir)
+                injection_head += "<link rel='stylesheet' href='custom.css'>\n"
             if os.path.exists(js_path):
-                injection += f"<script src='custom.js'></script>\n"
+                shutil.copy(js_path, out_dir)
+                # важно вставлять именно перед </body>, иначе network ещё не создан
+                injection_body += "<script src='custom.js'></script>\n"
+
+        # фон
         if bg:
             if bg.get('type') == 'color':
-                injection += f"<style>body{{background:{bg.get('value')} !important;}}</style>\n"
+                injection_head += f"<style>body{{background:{bg.get('value')} !important;}}</style>\n"
             elif bg.get('type') == 'image':
-                injection += f"<style>body{{background-image:url('{bg.get('value')}'); background-size:cover; background-position:center;}}</style>\n"
+                injection_head += (
+                    f"<style>body{{background-image:url('{bg.get('value')}'); "
+                    f"background-size:cover; background-position:center;}}</style>\n"
+                )
 
-        # вставим injection перед </head>
+        # вставим css в <head>, js в <body>
         if '</head>' in html:
-            html = html.replace('</head>', injection + '\n</head>')
+            html = html.replace('</head>', injection_head + '</head>')
+        if '</body>' in html:
+            html = html.replace('</body>', injection_body + '</body>')
+
         with open(output_file, 'w', encoding='utf-8') as f:
             f.write(html)
